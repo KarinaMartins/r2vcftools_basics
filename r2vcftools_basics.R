@@ -93,7 +93,7 @@ snps_ind_miss@meta
 VCFsummary(snps_unind)
 VCFsummary(snps_ind_miss)
 
-########## Filter sites by missing data ------------------------------------------------------------
+########## Filter loci (sites) by missing data ------------------------------------------------------------
 ## Missing data per locus (site)
 Missing_lc <- apply(GenotypeMatrix(snps_ind_miss), 2, function(x) sum(x < 0)/length(x)*100)
 summary(Missing_lc) 
