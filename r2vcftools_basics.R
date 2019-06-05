@@ -37,6 +37,10 @@ VCFsummary <- function(snps){
 
 ########## Load VCF file -----------------------------------------------------------
 ## Download example VCF file "Imaurandioides.vcf" from figshare: https://ndownloader.figshare.com/files/10990757
+url <- "https://ndownloader.figshare.com/files/10990757"
+download.file(url, destfile	= "Imaurandioides.vcf")
+
+## Load vcf file into vcfLink object
 snps_raw <-  vcfLink("Imaurandioides.vcf", overwriteID=T)
 snps_raw
 
