@@ -1,5 +1,5 @@
 
-########## r2vcftools instalation --------------------------------------------------
+########## r2vcftools installation --------------------------------------------------
 ## Install VCFtools
 # GitHub: https://github.com/vcftools/vcftools
 # Manual: https://vcftools.github.io/man_latest.html
