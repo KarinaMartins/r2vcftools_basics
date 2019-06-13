@@ -144,19 +144,25 @@ snps_MH <- Filter(snps_ind_site_miss, filterOptions(maf=0.05, hwe=0.0001))
 VCFsummary(snps_QD) 
 VCFsummary(snps_MH) 
 
+########## Filter to a single SNP per contig ---------------------------------------
+## This thins SNPs to a given distance in bp from one another.
+##  Setting the distance higher than the length of the contig ensures that you'll have a single SNP per contig.
+snps_thin <- Filter(snps_MH, filterOptions(thin=300)) 
+VCFsummary(snps_thin) 
+
 ########## Filter loci (sites) by Linkage Disequilibrium --------------------------------------------------
 ### LD within contigs
-ld_within <- Linkage(snps_MH, type="geno-r2", linkageOptions(min.r2=0.0))
+ld_within <- Linkage(snps_thin, type="geno-r2", linkageOptions(min.r2=0.0))
 head(ld_within)
 hist(ld_within$R.2) ## Define filtering threshold
 
-ld_within <- Linkage(snps_MH, type="geno-r2", linkageOptions(min.r2=0.5)) ## Sites with high LD
+ld_within <- Linkage(snps_thin, type="geno-r2", linkageOptions(min.r2=0.5)) ## Sites with high LD
 hist(ld_within$R.2)
 
 ld_snps <- ld_within$ID1
-nold_snps <- snps_MH@site_id[!(snps_MH@site_id %in% ld_snps)] 
-snps_WLD <- Subset(snps_MH, sites=nold_snps) # Keep snps that are not in LD.
-VCFsummary(snps_MH) 
+nold_snps <- snps_thin@site_id[!(snps_thin@site_id %in% ld_snps)] 
+snps_WLD <- Subset(snps_thin, sites=nold_snps) # Keep snps that are not in LD.
+VCFsummary(snps_thin) 
 VCFsummary(snps_WLD) 
 
 ## LD between contigs
